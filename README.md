@@ -50,4 +50,7 @@ celestia-appd status --node https://celestia-mainnet-rpc.astrosynx.com:443
 curl https://celestia-mainnet-api.astrosynx.com:443/cosmos/base/tendermint/v1beta1/blocks/latest
 ```
 
-<!-- separator --> <p align="center"> <i>Maintained with 💜 by <b>Astrosynx</b> — Validator Infrastructure & Tools</i><br> <a href="https://astrosynx.com" target="_blank">🌐 astrosynx.com</a> • <a href="https://x.com/astrosynx" target="_blank">𝕏 / Astrosynx</a> </p>
+---
+ 
+  <p align="center"> <i>Maintained with 💜 by <b>Astrosynx</b> — Validator Infrastructure & Tools</i><br> <a href="https://astrosynx.com" target="_blank">🌐 astrosynx.com</a> • <a href="https://github.com/astrosynx" target="_blank"> <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" width="18" style="vertical-align:middle; margin-right:4px;"> GitHub / Astrosynx </a> </p>
+  
