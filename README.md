@@ -36,3 +36,18 @@
 | 💬 gRPC | `celestia-testnet-grpc.astrosynx.com:443` |
 | 🌐 API | [`https://celestia-testnet-api.astrosynx.com:443`](https://celestia-testnet-api.astrosynx.com:443) |
 
+---
+
+## ⚙️ Quick Start
+
+```bash
+# Connect to Astrosynx Celestia Mainnet RPC
+celestia-appd status --node https://celestia-mainnet-rpc.astrosynx.com:443
+```
+
+```bash
+# Or query via LCD API
+curl https://celestia-mainnet-api.astrosynx.com:443/cosmos/base/tendermint/v1beta1/blocks/latest
+```
+
+<!-- separator --> <p align="center"> <i>Maintained with 💜 by <b>Astrosynx</b> — Validator Infrastructure & Tools</i><br> <a href="https://astrosynx.com" target="_blank">🌐 astrosynx.com</a> • <a href="https://x.com/astrosynx" target="_blank">𝕏 / Astrosynx</a> </p>
