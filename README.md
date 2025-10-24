@@ -22,7 +22,7 @@
 | 🧩 Snapshot/Addrbook/Seed/Peer | [https://astrosynx.com/networks/celestia/#services](https://astrosynx.com/networks/celestia/#services) |
 | ⚙️ RPC | [`https://celestia-mainnet-rpc.astrosynx.com:443`](https://celestia-mainnet-rpc.astrosynx.com:443) |
 | 💬 gRPC | `celestia-mainnet-grpc.astrosynx.com:443` |
-| 🌐 API | [`https://celestia-mainnet-lcd.astrosynx.com:443`](https://celestia-mainnet-lcd.astrosynx.com:443) |
+| 🌐 API | [`https://celestia-mainnet-api.astrosynx.com:443`](https://celestia-mainnet-api.astrosynx.com:443) |
 
 ---
 
@@ -34,5 +34,5 @@
 | 🧩 Snapshot/Addrbook/Seed/Peer | [https://astrosynx.com/networks/testnets/celestia/#services](https://astrosynx.com/networks/testnets/celestia/#services) |
 | ⚙️ RPC | [`https://celestia-testnet-rpc.astrosynx.com:443`](https://celestia-testnet-rpc.astrosynx.com:443) |
 | 💬 gRPC | `celestia-testnet-grpc.astrosynx.com:443` |
-| 🌐 API | [`https://celestia-testnet-lcd.astrosynx.com:443`](https://celestia-testnet-lcd.astrosynx.com:443) |
+| 🌐 API | [`https://celestia-testnet-api.astrosynx.com:443`](https://celestia-testnet-api.astrosynx.com:443) |
 
