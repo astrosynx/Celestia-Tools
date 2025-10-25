@@ -27,7 +27,7 @@
 ---
 
 ### **Testnet**
-> 🔗 [Astrosynx Celestia Testnet Services](https://astrosynx.com/networks/testnets/celestia/#services)
+> 🔗 [Astrosynx Celestia Testnet Services](https://astrosynx.gitbook.io/services/documentation/testnet-guides/celestia)
 
 | Service | URL |
 |----------|-----|
