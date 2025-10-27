@@ -20,9 +20,9 @@
 | Service | URL |
 |----------|-----|
 | 🧩 Snapshot/Addrbook/Seed/Peer | [https://astrosynx.gitbook.io/services/documentation/mainnet-guides/celestia](https://astrosynx.gitbook.io/services/documentation/mainnet-guides/celestia) |
-| ⚙️ RPC | [`https://celestia-mainnet-rpc.astrosynx.com`](https://celestia-mainnet-rpc.astrosynx.com) |
+| ⚙️ RPC | [`https://celestia-mainnet-rpc.astrosynx.com/`](https://celestia-mainnet-rpc.astrosynx.com/) |
 | 💬 gRPC | `celestia-mainnet-grpc.astrosynx.com:443` |
-| 🌐 API | [`https://celestia-mainnet-api.astrosynx.com`](https://celestia-mainnet-api.astrosynx.com) |
+| 🌐 API | [`https://celestia-mainnet-api.astrosynx.com/`](https://celestia-mainnet-api.astrosynx.com/) |
 
 ---
 
@@ -32,9 +32,9 @@
 | Service | URL |
 |----------|-----|
 | 🧩 Snapshot/Addrbook/Seed/Peer | [https://astrosynx.gitbook.io/services/documentation/testnet-guides/celestia](https://astrosynx.gitbook.io/services/documentation/testnet-guides/celestia) |
-| ⚙️ RPC | [`https://celestia-testnet-rpc.astrosynx.com:443`](https://celestia-testnet-rpc.astrosynx.com) |
+| ⚙️ RPC | [`https://celestia-testnet-rpc.astrosynx.com/`](https://celestia-testnet-rpc.astrosynx.com/) |
 | 💬 gRPC | `celestia-testnet-grpc.astrosynx.com:443` |
-| 🌐 API | [`https://celestia-testnet-api.astrosynx.com:443`](https://celestia-testnet-api.astrosynx.com:443) |
+| 🌐 API | [`https://celestia-testnet-api.astrosynx.com/`](https://celestia-testnet-api.astrosynx.com/) |
 
 ---
 
