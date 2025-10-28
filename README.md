@@ -31,7 +31,7 @@
 
 | Service | URL |
 |----------|-----|
-| 🧩 Snapshot/Addrbook/Seed/Peer | [https://astrosynx.gitbook.io/services/documentation/testnet-guides/celestia](https://astrosynx.gitbook.io/services/documentation/testnet-guides/celestia) |
+| 🧩 Snapshot/Addrbook/Seed/Peer | [https://astrosynx.gitbook.io/services/documentation/testnet-guides/celestia](https://astrosynx.gitbook.io/services/documentation/testnet-guides/celestia/public-endpoints-and-peering) |
 | ⚙️ RPC | [`https://celestia-testnet-rpc.astrosynx.com/`](https://celestia-testnet-rpc.astrosynx.com/) |
 | 💬 gRPC | `celestia-testnet-grpc.astrosynx.com:443` |
 | 🌐 API | [`https://celestia-testnet-api.astrosynx.com/`](https://celestia-testnet-api.astrosynx.com/) |
