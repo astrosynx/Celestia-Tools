@@ -19,22 +19,36 @@
 
 | Service | URL |
 |----------|-----|
-| 🧩 Snapshot/Addrbook/Seed/Peer | [https://astrosynx.gitbook.io/services/documentation/mainnet-guides/celestia](https://astrosynx.gitbook.io/services/documentation/mainnet-guides/celestia/public-endpoints-and-peering) |
+| 🧩 Addrbook/Seed/Peer | [https://astrosynx.gitbook.io/services/documentation/mainnet-guides/celestia](https://astrosynx.gitbook.io/services/documentation/mainnet-guides/celestia/public-endpoints-and-peering) |
 | ⚙️ RPC | [`https://celestia-mainnet-rpc.astrosynx.com/`](https://celestia-mainnet-rpc.astrosynx.com/) |
 | 💬 gRPC | `celestia-mainnet-grpc.astrosynx.com:443` |
 | 🌐 API | [`https://celestia-mainnet-api.astrosynx.com/`](https://celestia-mainnet-api.astrosynx.com/) |
 
----
 
 ### **Testnet**
 > 🔗 [Astrosynx Celestia Testnet Services](https://astrosynx.gitbook.io/services/documentation/testnet-guides/celestia)
 
 | Service | URL |
 |----------|-----|
-| 🧩 Snapshot/Addrbook/Seed/Peer | [https://astrosynx.gitbook.io/services/documentation/testnet-guides/celestia](https://astrosynx.gitbook.io/services/documentation/testnet-guides/celestia/public-endpoints-and-peering) |
+| 🧩 Addrbook/Seed/Peer | [https://astrosynx.gitbook.io/services/documentation/testnet-guides/celestia](https://astrosynx.gitbook.io/services/documentation/testnet-guides/celestia/public-endpoints-and-peering) |
 | ⚙️ RPC | [`https://celestia-testnet-rpc.astrosynx.com/`](https://celestia-testnet-rpc.astrosynx.com/) |
 | 💬 gRPC | `celestia-testnet-grpc.astrosynx.com:443` |
 | 🌐 API | [`https://celestia-testnet-api.astrosynx.com/`](https://celestia-testnet-api.astrosynx.com/) |
+
+---
+
+### 🗂 Snapshots
+| Network | Snapshot URL | Frequency | Pruning | Indexer |
+|--------|--------------|-----------|---------|---------|
+| **Mainnet** | https://mainnet-snap.astrosynx.com/celestia/ | Every 4 hours | `custom: 100/10` | `null` |
+| **Testnet** | https://testnet-snap.astrosynx.com/celestia/ | Every 4 hours | `custom: 100/10` | `null` |
+
+### 🏛 Archive Snapshots (Full History)
+> Contains **both Mainnet and Testnet** archive snapshots.
+
+| Archive URL | Frequency | Pruning | Indexer |
+|-------------|-----------|---------|---------|
+| https://archive-snap.astrosynx.com/ | Every 5 days | `nothing` | `kv` |
 
 ---
 
