@@ -65,6 +65,23 @@ curl https://celestia-mainnet-api.astrosynx.com:443/cosmos/base/tendermint/v1bet
 ```
 
 ---
+
+### ⚠️ Common Errors & Fixes
+
+| Error | Cause | Solution |
+|-------|-------|---------|
+| `insufficient fees` | Not enough fees for the transaction | Increase `--fees` when delegating or sending transactions |
+| `failed to connect to RPC` | RPC is unavailable or blocked by firewall | Check the URL and open the required ports (443, 26657, 26658) |
+| `snapshot not found / download failed` | URL is unavailable or snapshot was removed | Use an updated mirror or the archive snapshot |
+| `node stuck / not syncing` | Incorrect peers or corrupted data | Clear the directory `~/.celestia-app` and restore from snapshot |
+| `permission denied` | Node does not have permissions for the directory | Run commands as the user owning `$HOME/.celestia-app` or use `sudo` carefully |
+
+---
  
   <p align="center"> <i>Maintained with 💜 by <b>Astrosynx</b> — Validator Infrastructure & Tools</i><br> <a href="https://astrosynx.com" target="_blank">🌐 astrosynx.com</a> • <a href="https://github.com/astrosynx" target="_blank"> <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" width="18" style="vertical-align:middle; margin-right:4px;"> GitHub / Astrosynx </a> </p>
+
+<p align="center">
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:7A1FF3,100:10002B&height=120&section=footer"/>
+</p>
+  
   
