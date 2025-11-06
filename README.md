@@ -46,9 +46,10 @@
 ### 🏛 Archive Snapshots (Full History)
 > Contains **both Mainnet and Testnet** archive snapshots.
 
-| Archive URL | Frequency | Pruning | Indexer |
-|-------------|-----------|---------|---------|
-| https://archive-snap.astrosynx.com/ | Every 5 days | `nothing` | `kv` |
+| Network | Snapshot URL | Frequency | Pruning | Indexer |
+|----------|---------------|-----------|----------|----------|
+| **Mainnet** | https://archive-snap.astrosynx.com/celestia-mainnet/ | Every 5 days | `nothing` | `kv` |
+| **Testnet** | https://archive-snap.astrosynx.com/celestia-testnet/ | Every 5 days | `nothing` | `kv` |
 
 ---
 
