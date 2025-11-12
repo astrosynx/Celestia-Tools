@@ -65,6 +65,12 @@ celestia-appd status --node https://celestia-mainnet-rpc.astrosynx.com:443
 curl https://celestia-mainnet-api.astrosynx.com:443/cosmos/base/tendermint/v1beta1/blocks/latest
 ```
 
+```bash
+# Query Node Version and staking parameters
+celestia-appd version
+celestia-appd query staking params --node https://celestia-mainnet-rpc.astrosynx.com:443
+```
+
 ---
 
 ### ⚠️ Common Errors & Fixes
