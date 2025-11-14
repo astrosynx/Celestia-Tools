@@ -18,7 +18,7 @@
 > 🔗 [Astrosynx Celestia Mainnet Services](https://astrosynx.gitbook.io/services/documentation/mainnet-guides/celestia)
 
 | Service | URL |
-|----------|-----|
+|----------|------|
 | 🧩 Addrbook/Seed/Peer | [https://astrosynx.gitbook.io/services/documentation/mainnet-guides/celestia](https://astrosynx.gitbook.io/services/documentation/mainnet-guides/celestia/public-endpoints-and-peering) |
 | ⚙️ RPC | [`https://celestia-mainnet-rpc.astrosynx.com/`](https://celestia-mainnet-rpc.astrosynx.com/) |
 | 💬 gRPC | `celestia-mainnet-grpc.astrosynx.com:443` |
