@@ -131,7 +131,7 @@ celestia-appd query staking params --node https://celestia-mainnet-rpc.astrosynx
 
 ---
  
-  <p align="center"> <i>Maintained with 💜 by <b>Astrosynx</b> — Validator Infrastructure & Tools</i><br> <a href="https://astrosynx.com" target="_blank">🌐 astrosynx.com</a> • <a href="https://github.com/astrosynx" target="_blank"> <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" width="18" style="vertical-align:middle; margin-right:4px;"> GitHub / Astrosynx </a> </p>
+  <p align="center"> <i>Maintained with 💜 by <b>Astrosynx</b> — Validator Infrastructure & Tools</i><br> <a href="https://astrosynx.com" target="_blank">🌐 https://astrosynx.org/</a> • <a href="https://github.com/astrosynx" target="_blank"> <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" width="18" style="vertical-align:middle; margin-right:4px;"> GitHub / Astrosynx </a> </p>
 
 <p align="center">
   <img src="https://capsule-render.vercel.app/api?type=waving&color=0:7A1FF3,100:10002B&height=120&section=footer"/>
