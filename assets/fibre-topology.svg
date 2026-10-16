@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 430" width="1200" height="430" role="img" aria-label="Fibre on a separate host: clients reach Fibre over public TLS on 7980; Fibre reaches the validator's app gRPC 9090 and signer 26669 over a private VLAN with mTLS">
+  <defs>
+    <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#bababb"/>
+    </marker>
+    <marker id="ag" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#00d892"/>
+    </marker>
+  </defs>
+  <style>
+    .mono{font-family:ui-monospace,'IBM Plex Mono',SFMono-Regular,Consolas,monospace}
+    .sans{font-family:Inter,'Helvetica Neue','Segoe UI',Arial,sans-serif}
+    .flow{stroke-dasharray:6 6;animation:f 1.4s linear infinite}
+    @keyframes f{to{stroke-dashoffset:-24}}
+    @media (prefers-reduced-motion:reduce){*{animation:none!important}}
+  </style>
+  <rect width="1200" height="430" fill="#0b0e12"/>
+  <rect x=".5" y=".5" width="1199" height="429" fill="none" stroke="#303235"/>
+
+  <rect x="32" y="30" width="7" height="7" fill="#00d892"/>
+  <text class="mono" x="48" y="37" font-size="11.5" letter-spacing="1.8" fill="#bababb">FIBRE OFF THE VALIDATOR HOST</text>
+
+  <!-- private network zone -->
+  <rect x="452.5" y="74.5" width="715" height="296" fill="none" stroke="#303235" stroke-dasharray="4 5"/>
+  <text class="mono" x="470" y="98" font-size="10.5" letter-spacing="1.6" fill="#818284">PRIVATE VLAN / WIREGUARD · SAME DATACENTRE</text>
+
+  <!-- clients -->
+  <rect x="32.5" y="150.5" width="220" height="130" fill="#181a1d" stroke="#303235"/>
+  <text class="mono" x="52" y="178" font-size="10.5" letter-spacing="1.6" fill="#818284">INTERNET</text>
+  <text class="sans" x="52" y="212" font-size="22" fill="#dedede">Fibre clients</text>
+  <text class="sans" x="52" y="240" font-size="13.5" fill="#818284">Rollups uploading and</text>
+  <text class="sans" x="52" y="258" font-size="13.5" fill="#818284">downloading blob shards</text>
+
+  <!-- fibre host -->
+  <rect x="480.5" y="130.5" width="250" height="170" fill="#181a1d" stroke="#bababb"/>
+  <text class="mono" x="500" y="158" font-size="10.5" letter-spacing="1.6" fill="#818284">HOST B · 10.10.0.2</text>
+  <text class="sans" x="500" y="192" font-size="22" fill="#dedede">Fibre server</text>
+  <text class="sans" x="500" y="220" font-size="13.5" fill="#818284">Upload verification, shard</text>
+  <text class="sans" x="500" y="238" font-size="13.5" fill="#818284">storage, receive buffers</text>
+  <text class="mono" x="500" y="276" font-size="11" fill="#bababb">:7980 public · TLS</text>
+
+  <!-- validator host -->
+  <rect x="890.5" y="130.5" width="250" height="210" fill="#181a1d" stroke="#bababb"/>
+  <text class="mono" x="910" y="158" font-size="10.5" letter-spacing="1.6" fill="#818284">HOST A · 10.10.0.1</text>
+  <text class="sans" x="910" y="192" font-size="22" fill="#dedede">celestia-appd</text>
+  <text class="sans" x="910" y="220" font-size="13.5" fill="#818284">Validator, consensus key.</text>
+  <text class="sans" x="910" y="238" font-size="13.5" fill="#818284">No public Fibre port.</text>
+  <rect x="910.5" y="256.5" width="210" height="28" fill="#0b0e12" stroke="#303235"/>
+  <text class="mono" x="922" y="275" font-size="11" fill="#bababb">:9090 app gRPC</text>
+  <rect x="910.5" y="292.5" width="210" height="28" fill="#0b0e12" stroke="#303235"/>
+  <text class="mono" x="922" y="311" font-size="11" fill="#00d892">:26669 signer</text>
+
+  <!-- links -->
+  <line class="flow" x1="252" y1="215" x2="478" y2="215" stroke="#bababb" stroke-width="1.6" marker-end="url(#ar)"/>
+  <text class="mono" x="270" y="204" font-size="10.5" letter-spacing="1.2" fill="#bababb">TLS :7980</text>
+  <text class="mono" x="270" y="236" font-size="10" fill="#818284">cert endorsed by</text>
+  <text class="mono" x="270" y="250" font-size="10" fill="#818284">consensus key</text>
+
+  <line class="flow" x1="731" y1="270" x2="908" y2="270" stroke="#bababb" stroke-width="1.6" marker-end="url(#ar)"/>
+  <text class="mono" x="748" y="262" font-size="10.5" letter-spacing="1.2" fill="#bababb">PLAINTEXT</text>
+
+  <line class="flow" x1="731" y1="306" x2="908" y2="306" stroke="#00d892" stroke-width="1.6" marker-end="url(#ag)"/>
+  <text class="mono" x="748" y="328" font-size="10.5" letter-spacing="1.2" fill="#00d892">mTLS · PRIVATE CA</text>
+
+  <!-- chain registration -->
+  <line x1="605" y1="301" x2="605" y2="392" stroke="#303235" stroke-dasharray="3 4"/>
+  <text class="mono" x="32" y="404" font-size="11" fill="#818284">ON-CHAIN</text>
+  <text class="mono" x="120" y="404" font-size="11" fill="#dedede">celestia-appd tx valaddr set-host &lt;public host of B&gt;:7980</text>
+  <text class="mono" x="1168" y="404" text-anchor="end" font-size="11" fill="#818284">clients find B here</text>
+</svg>
