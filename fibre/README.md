@@ -260,5 +260,6 @@ Certificates are loaded at startup. To rotate, issue new `node.pem` and `fibre.p
 
 - [Run a Fibre server](https://docs.celestia.org/operate/consensus-validators/fibre/), Celestia docs
 - [privval gRPC TLS guide](https://github.com/celestiaorg/celestia-core/blob/main/docs/guides/privval-grpc-tls.md), celestia-core
+- [Moving Fibre off the validator host: private VLAN + mTLS (mocha-5)](https://forum.celestia.org/t/moving-fibre-off-the-validator-host-private-vlan-mtls-mocha-5/2314), field report by unitynodes on the Celestia forum
 
 <sub>Commands are examples for Mocha. Check flags against the release you run. <a href="../README.md">← Back to Celestia Tools</a></sub>
