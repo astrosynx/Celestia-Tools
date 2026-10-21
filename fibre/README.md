@@ -7,7 +7,7 @@
 Fibre is the data-availability service introduced with **app version 10**. Rollups upload and download blob shards directly from validator-run Fibre servers, and every bonded validator is expected to run one. The simplest setup puts Fibre on the validator machine. This guide covers the next step: moving Fibre to its own server and connecting it back to the validator over a private link.
 
 > [!NOTE]
-> **Status, October 2026:** Fibre is live on **Mocha** (`mocha-5`, `v10.4.0-mocha`). **Mainnet** is still on app v9, so prepare there but do not start Fibre or run `set-host` until `app_version` reports `10`.
+> **Status:** Fibre is live on **mainnet** (`celestia`, `v10.4.0`) since 20 October 2026, and on **Mocha** (`mocha-5`, `v10.4.0-mocha`). The commands below use mainnet. Notes show the Mocha values.
 
 <img src="../assets/fibre-topology.svg" width="100%" alt="Fibre on host B, validator on host A, connected over a private VLAN">
 
@@ -20,7 +20,7 @@ Fibre is the data-availability service introduced with **app version 10**. Rollu
 | **Disk and bandwidth** | Shard storage and blob traffic share the validator's NVMe and uplink. | Both scale on their own. |
 | **Exposure** | Port `7980` is open to the internet on the machine that holds the consensus key. | The validator has no public Fibre port at all. |
 
-At today's Mocha load this split is about headroom rather than necessity. It becomes important as blob throughput grows.
+At launch-day load this split is about headroom rather than necessity. It becomes important as rollups move blob traffic to Fibre and throughput grows.
 
 ## The three connections
 
@@ -121,7 +121,7 @@ Make sure no broader rule opens `9090` or `26669` on the public interface. On ho
 
 ## 3. Prepare host B
 
-Install the Fibre binary for your network's release (`v10.4.0-mocha` on Mocha) as described in the [official guide](https://docs.celestia.org/operate/consensus-validators/fibre/). Then create the service. **Do not start it yet.**
+Install the Fibre binary for your network's release (`v10.4.0` on mainnet, `v10.4.0-mocha` on Mocha) as described in the [official guide](https://docs.celestia.org/operate/consensus-validators/fibre/). Then create the service. **Do not start it yet.**
 
 ```bash
 sudo tee /etc/systemd/system/fibre.service > /dev/null <<EOF
@@ -216,7 +216,7 @@ Run this only once `7980` on host B answers from the outside:
 nc -vz <public host of B> 7980
 
 celestia-appd tx valaddr set-host <public host of B>:7980 \
-  --from <validator wallet> --chain-id mocha-5 --fees 2000utia -y
+  --from <validator wallet> --chain-id celestia --fees 2000utia -y    # Mocha: --chain-id mocha-5
 ```
 
 Until this transaction lands, clients keep connecting to the old address on host A. Use a DNS name rather than an IP. A later move then only needs a DNS change, with no new transaction.
@@ -262,4 +262,5 @@ Certificates are loaded at startup. To rotate, issue new `node.pem` and `fibre.p
 - [privval gRPC TLS guide](https://github.com/celestiaorg/celestia-core/blob/main/docs/guides/privval-grpc-tls.md), celestia-core
 - [Moving Fibre off the validator host: private VLAN + mTLS (mocha-5)](https://forum.celestia.org/t/moving-fibre-off-the-validator-host-private-vlan-mtls-mocha-5/2314), field report by unitynodes on the Celestia forum
 
-<sub>Commands are examples for Mocha. Check flags against the release you run. <a href="../README.md">← Back to Celestia Tools</a></sub>
+<sub>Commands are examples for mainnet. Check flags against the release you run. <a href="../README.md">← Back to Celestia Tools</a></sub>
+
