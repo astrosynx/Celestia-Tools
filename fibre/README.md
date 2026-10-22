@@ -7,7 +7,7 @@
 Fibre is the data-availability service introduced with **app version 10**. Rollups upload and download blob shards directly from validator-run Fibre servers, and every bonded validator is expected to run one. The simplest setup puts Fibre on the validator machine. This guide covers the next step: moving Fibre to its own server and connecting it back to the validator over a private link.
 
 > [!NOTE]
-> **Status:** Fibre is live on **mainnet** (`celestia`, `v10.4.0`) since 20 October 2026, and on **Mocha** (`mocha-5`, `v10.4.0-mocha`). The commands below use mainnet. Notes show the Mocha values.
+> **Status:** Fibre (app v10) is live on **mainnet** (`celestia`) since 20 October 2026, and on **Mocha** (`mocha-5`). The current release is **`v10.5.0`** on mainnet and **`v10.5.0-mocha`** on Mocha. The commands below use mainnet. Notes show the Mocha values.
 
 <img src="../assets/fibre-topology.svg" width="100%" alt="Fibre on host B, validator on host A, connected over a private VLAN">
 
@@ -121,7 +121,7 @@ Make sure no broader rule opens `9090` or `26669` on the public interface. On ho
 
 ## 3. Prepare host B
 
-Install the Fibre binary for your network's release (`v10.4.0` on mainnet, `v10.4.0-mocha` on Mocha) as described in the [official guide](https://docs.celestia.org/operate/consensus-validators/fibre/). Then create the service. **Do not start it yet.**
+Install the Fibre binary from the same release as your celestia-appd (`v10.5.0` on mainnet, `v10.5.0-mocha` on Mocha). The release archive is `fibre_Linux_x86_64.tar.gz` or `fibre_Linux_arm64.tar.gz`. Follow the steps in the [official guide](https://docs.celestia.org/operate/consensus-validators/fibre/). Then create the service. **Do not start it yet.**
 
 ```bash
 sudo tee /etc/systemd/system/fibre.service > /dev/null <<EOF
@@ -133,7 +133,7 @@ Wants=network-online.target
 [Service]
 User=$USER
 ExecStart=$(which fibre) start \\
-  --home $HOME/.fibre \\
+  --home $HOME/.celestia-fibre \\
   --app-grpc-address 10.10.0.1:9090 \\
   --signer-grpc-address 10.10.0.1:26669 \\
   --signer-grpc-ca-file /etc/fibre/tls/ca.pem \\
@@ -228,6 +228,14 @@ VALCONS=$(celestia-appd comet show-address)
 celestia-appd query valaddr provider $VALCONS    # host is B's public address
 ```
 
+Since `v10.5.0`, Fibre serves the standard gRPC health service on `7980`. Use it for monitoring. When the server is not ready, the log names the failing check.
+
+```bash
+# on host B, with grpc_health_probe installed
+grpc_health_probe -addr=127.0.0.1:7980 -tls -tls-no-verify                          # readiness
+grpc_health_probe -addr=127.0.0.1:7980 -tls -tls-no-verify -service=fibre-liveness   # liveness
+```
+
 Then reboot host B once and confirm that the private interface, firewall and Fibre all come back on their own.
 
 ## Field notes
@@ -240,6 +248,24 @@ These come from a public report by **unitynodes**, who moved Fibre off their Moc
 - **Even a short link flap costs blocks.** A 5–7 second outage on each bonded port, one after the other, cost about ten blocks. Ask the provider to schedule network work, and do not run the validator on a single uplink.
 - **Forgetting `set-host` is the most common mistake.** Everything looks healthy, but clients still go to the old address.
 - **Stick to one Fibre server per validator for now.** Each server currently derives the full storage budget as if it were the only one, so extra servers would each reserve the same storage. Splitting the budget and routing between servers is tracked in celestia-app issue [#7690](https://github.com/celestiaorg/celestia-app/issues/7690). Once that lands, servers in several locations become practical, and a WireGuard mesh will matter more than a single VLAN.
+
+## Upgrading
+
+celestia-appd and Fibre come from the same release and are upgraded together. On a split setup the order is: upgrade and restart celestia-appd on host A, confirm it is signing, then upgrade and restart Fibre on host B.
+
+Releases can add new config keys. After installing new binaries, let them fill in anything missing. Existing values are kept and backups are made:
+
+```bash
+# host A
+celestia-appd config sync --home ~/.celestia-app --dry-run
+celestia-appd config sync --home ~/.celestia-app
+
+# host B (run with the new celestia-appd binary copied there, or sync server_config.toml by hand)
+celestia-appd config sync --fibre-home ~/.celestia-fibre --dry-run
+celestia-appd config sync --fibre-home ~/.celestia-fibre
+```
+
+`v10.5.0` adds a `[health]` table to `server_config.toml`. The defaults apply if it is missing. It also requires `object_storage.endpoint` to be an `https://` URL if you use S3 or R2.
 
 ## Rotating certificates
 
@@ -263,4 +289,3 @@ Certificates are loaded at startup. To rotate, issue new `node.pem` and `fibre.p
 - [Moving Fibre off the validator host: private VLAN + mTLS (mocha-5)](https://forum.celestia.org/t/moving-fibre-off-the-validator-host-private-vlan-mtls-mocha-5/2314), field report by unitynodes on the Celestia forum
 
 <sub>Commands are examples for mainnet. Check flags against the release you run. <a href="../README.md">← Back to Celestia Tools</a></sub>
-
