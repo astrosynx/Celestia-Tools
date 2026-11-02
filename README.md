@@ -11,7 +11,7 @@
 
 Public infrastructure for Celestia operators, run by [Astrosynx](https://github.com/astrosynx) on our own hardware. It covers consensus endpoints and snapshots for mainnet and Mocha, a state sync recipe, and a field guide to running Fibre on a separate host.
 
-**Contents:** [Endpoints](#endpoints) · [Snapshots](#snapshots) · [State sync](#state-sync) · [Fibre](#fibre) · [Quick checks](#quick-checks) · [Common errors](#common-errors)
+**Contents:** [Endpoints](#endpoints) · [Snapshots](#snapshots) · [State sync](#state-sync) · [Fibre](#fibre) · [Quick checks](#quick-checks) · [Scripts](#scripts) · [Common errors](#common-errors)
 
 <br>
 
@@ -20,21 +20,35 @@ Public infrastructure for Celestia operators, run by [Astrosynx](https://github.
 | | Mainnet | Mocha testnet |
 |---|---|---|
 | **Chain ID** | `celestia` | `mocha-5` |
-| **RPC** | [`celestia-mainnet-rpc.astrosynx.com`](https://celestia-mainnet-rpc.astrosynx.com/) | [`celestia-testnet-rpc.astrosynx.com`](https://celestia-testnet-rpc.astrosynx.com/) |
-| **gRPC** | `celestia-mainnet-grpc.astrosynx.com:443` | `celestia-testnet-grpc.astrosynx.com:443` |
-| **API** | [`celestia-mainnet-api.astrosynx.com`](https://celestia-mainnet-api.astrosynx.com/) | [`celestia-testnet-api.astrosynx.com`](https://celestia-testnet-api.astrosynx.com/) |
-| **Peers, seeds, addrbook** | [GitBook ↗](https://astrosynx.gitbook.io/services/documentation/mainnet-guides/celestia/public-endpoints-and-peering) | [GitBook ↗](https://astrosynx.gitbook.io/services/documentation/testnet-guides/celestia/public-endpoints-and-peering) |
+| **RPC** | [`celestia-mainnet-rpc.astrosynx.org`](https://celestia-mainnet-rpc.astrosynx.org/) | [`celestia-testnet-rpc.astrosynx.org`](https://celestia-testnet-rpc.astrosynx.org/) |
+| **gRPC** | `celestia-mainnet-grpc.astrosynx.org:443` | `celestia-testnet-grpc.astrosynx.org:443` |
+| **API** | [`celestia-mainnet-api.astrosynx.org`](https://celestia-mainnet-api.astrosynx.org/) | [`celestia-testnet-api.astrosynx.org`](https://celestia-testnet-api.astrosynx.org/) |
+| **Peer** | `71418d16187ff21940f90a82983e43d402046e02@celestia-mainnet-peer.astrosynx.org:15656` | `edab5d0ef508c54770f7983efdba8ec704e394d0@celestia-testnet-peer.astrosynx.org:16656` |
+| **Live peers, addrbook, genesis** | [GitBook ↗](https://astrosynx.gitbook.io/services/documentation/mainnet-guides/celestia/public-endpoints-and-peering) | [GitBook ↗](https://astrosynx.gitbook.io/services/documentation/testnet-guides/celestia/public-endpoints-and-peering) |
 | **Full guide** | [Mainnet services ↗](https://astrosynx.gitbook.io/services/documentation/mainnet-guides/celestia) | [Testnet services ↗](https://astrosynx.gitbook.io/services/documentation/testnet-guides/celestia) |
 
 <br>
 
 ## Snapshots
 
-| | Mainnet | Mocha testnet | Every | Pruning | Indexer |
-|---|---|---|---|---|---|
-| **Pruned** | [`mainnet-snap…/celestia/`](https://mainnet-snap.astrosynx.com/celestia/) | [`testnet-snap…/celestia/`](https://testnet-snap.astrosynx.com/celestia/) | 4 hours | `custom: 100/10` | `null` |
+| | Mainnet | Mocha testnet |
+|---|---|---|
+| **Latest** | [`celestia_latest.tar.lz4`](https://mainnet-snap.astrosynx.org/celestia_latest.tar.lz4) | [`celestia-testnet_latest.tar.lz4`](https://testnet-snap.astrosynx.org/celestia-testnet_latest.tar.lz4) |
+| **All files** | [`mainnet-snap.astrosynx.org`](https://mainnet-snap.astrosynx.org/) | [`testnet-snap.astrosynx.org`](https://testnet-snap.astrosynx.org/) |
+| **Height and size** | [`state.json`](https://mainnet-snap.astrosynx.org/state.json) | [`state.json`](https://testnet-snap.astrosynx.org/state.json) |
 
-Snapshots are pruned and suit validators and RPC nodes. To get a node up even faster, use [state sync](#state-sync).
+Every 4 hours · pruning `custom: 100/0/19` · indexer `null` · `pebbledb`. The listing also has `addrbook.json` and `genesis.json`.
+
+```bash
+sudo systemctl stop celestia-appd
+cp $HOME/.celestia-app/data/priv_validator_state.json $HOME/priv_validator_state.json.backup
+rm -rf $HOME/.celestia-app/data
+curl -L https://mainnet-snap.astrosynx.org/celestia_latest.tar.lz4 | tar -Ilz4 -xf - -C $HOME/.celestia-app/
+mv $HOME/priv_validator_state.json.backup $HOME/.celestia-app/data/priv_validator_state.json
+sudo systemctl restart celestia-appd && sudo journalctl -u celestia-appd -f -o cat
+```
+
+Snapshots are pruned and suit validators and RPC nodes. They use `db_backend = "pebbledb"`, so set the same value in `config.toml`. To get a node up even faster, use [state sync](#state-sync).
 
 <br>
 
@@ -42,7 +56,7 @@ Snapshots are pruned and suit validators and RPC nodes. To get a node up even fa
 
 State sync downloads a recent state snapshot from peers instead of replaying every block, so a fresh node usually catches up within minutes. The node has no block history from before the trust height.
 
-> For Mocha, use `SNAP_RPC="https://celestia-testnet-rpc.astrosynx.com:443"`.
+> For Mocha, use `SNAP_RPC="https://celestia-testnet-rpc.astrosynx.org:443"`.
 
 ```bash
 # 1. Stop the node and back up the validator state
@@ -53,7 +67,7 @@ cp $HOME/.celestia-app/data/priv_validator_state.json $HOME/priv_validator_state
 celestia-appd tendermint unsafe-reset-all --home $HOME/.celestia-app --keep-addr-book
 
 # 3. Get a trusted height and hash from the Astrosynx RPC
-SNAP_RPC="https://celestia-mainnet-rpc.astrosynx.com:443"
+SNAP_RPC="https://celestia-mainnet-rpc.astrosynx.org:443"
 LATEST_HEIGHT=$(curl -s $SNAP_RPC/block | jq -r .result.block.header.height)
 TRUST_HEIGHT=$((LATEST_HEIGHT - 2000))
 TRUST_HASH=$(curl -s "$SNAP_RPC/block?height=$TRUST_HEIGHT" | jq -r .result.block_id.hash)
@@ -97,18 +111,37 @@ Fibre is the data-availability service introduced with app v10. It is **live on 
 
 ```bash
 # Node status through our RPC
-celestia-appd status --node https://celestia-mainnet-rpc.astrosynx.com:443
+celestia-appd status --node https://celestia-mainnet-rpc.astrosynx.org:443
 
 # Latest block through the REST API
-curl -s https://celestia-mainnet-api.astrosynx.com/cosmos/base/tendermint/v1beta1/blocks/latest | jq .block.header.height
+curl -s https://celestia-mainnet-api.astrosynx.org/cosmos/base/tendermint/v1beta1/blocks/latest | jq .block.header.height
 
 # Active app version (10 = Fibre available)
-curl -s https://celestia-mainnet-rpc.astrosynx.com/abci_info | jq -r .result.response.app_version
+curl -s https://celestia-mainnet-rpc.astrosynx.org/abci_info | jq -r .result.response.app_version
 
 # Local binary version and staking parameters
 celestia-appd version
-celestia-appd query staking params --node https://celestia-mainnet-rpc.astrosynx.com:443
+celestia-appd query staking params --node https://celestia-mainnet-rpc.astrosynx.org:443
 ```
+
+<br>
+
+## Scripts
+
+Small read-only checks for cron or monitoring. They exit `0` when healthy and `1` on a problem.
+
+| Script | Checks |
+|---|---|
+| [`scripts/sync-check.sh`](./scripts/sync-check.sh) | Local height against a reference RPC, the same chain ID on both sides, and `catching_up` |
+| [`scripts/fibre-health.sh`](./scripts/fibre-health.sh) | `app_version` ≥ 10, the Fibre service and port `7980`, gRPC readiness and liveness (v10.5.0+), and your `valaddr` registration |
+
+```bash
+git clone https://github.com/astrosynx/Celestia-Tools.git && cd Celestia-Tools
+bash scripts/sync-check.sh                      # Mocha: REF_RPC=https://celestia-testnet-rpc.astrosynx.org
+bash scripts/fibre-health.sh                    # on a Fibre-only host: CHECK_REGISTRATION=0
+```
+
+Both need `curl` and `jq`. `fibre-health.sh` uses `grpc_health_probe` if it is installed.
 
 <br>
 
@@ -126,7 +159,4 @@ celestia-appd query staking params --node https://celestia-mainnet-rpc.astrosynx
 
 ---
 
-<sub>Maintained by <a href="https://github.com/astrosynx">Astrosynx</a>, on mining and compute infrastructure we have run since 2017 · <a href="https://astrosynx.org/">astrosynx.org</a> · <a href="https://astrosynx.org/tech">Operator hub</a></sub>
-
-
-
+<sub>MIT licensed · Maintained by <a href="https://github.com/astrosynx">Astrosynx</a>, on mining and compute infrastructure we have run since 2017 · <a href="https://astrosynx.org/">astrosynx.org</a> · <a href="https://astrosynx.org/tech">Operator hub</a></sub>
