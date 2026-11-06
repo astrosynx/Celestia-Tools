@@ -7,7 +7,7 @@
 Fibre is the data-availability service introduced with **app version 10**. Rollups upload and download blob shards directly from validator-run Fibre servers, and every bonded validator is expected to run one. The simplest setup puts Fibre on the validator machine. This guide covers the next step: moving Fibre to its own server and connecting it back to the validator over a private link.
 
 > [!NOTE]
-> **Status:** Fibre (app v10) is live on **mainnet** (`celestia`) since 20 October 2026, and on **Mocha** (`mocha-5`). The current release is **`v10.5.0`** on mainnet and **`v10.5.0-mocha`** on Mocha. The commands below use mainnet. Notes show the Mocha values.
+> **Status:** Fibre (app v10) is live on **mainnet** (`celestia`) since 20 October 2026, and on **Mocha** (`mocha-5`). The current release is **`v10.6.0`** on mainnet and **`v10.6.0-mocha`** on Mocha. The commands below use mainnet. Notes show the Mocha values.
 
 <img src="../assets/fibre-topology.svg" width="100%" alt="Fibre on host B, validator on host A, connected over a private VLAN">
 
@@ -121,7 +121,7 @@ Make sure no broader rule opens `9090` or `26669` on the public interface. On ho
 
 ## 3. Prepare host B
 
-Install the Fibre binary from the same release as your celestia-appd (`v10.5.0` on mainnet, `v10.5.0-mocha` on Mocha). The release archive is `fibre_Linux_x86_64.tar.gz` or `fibre_Linux_arm64.tar.gz`. Follow the steps in the [official guide](https://docs.celestia.org/operate/consensus-validators/fibre/). Then create the service. **Do not start it yet.**
+Install the Fibre binary from the same release as your celestia-appd (`v10.6.0` on mainnet, `v10.6.0-mocha` on Mocha). The release archive is `fibre_Linux_x86_64.tar.gz` or `fibre_Linux_arm64.tar.gz`. Follow the steps in the [official guide](https://docs.celestia.org/operate/consensus-validators/fibre/). Then create the service. **Do not start it yet.**
 
 ```bash
 sudo tee /etc/systemd/system/fibre.service > /dev/null <<EOF
@@ -267,6 +267,8 @@ celestia-appd config sync --fibre-home ~/.celestia-fibre
 
 `v10.5.0` adds a `[health]` table to `server_config.toml`. The defaults apply if it is missing. It also requires `object_storage.endpoint` to be an `https://` URL if you use S3 or R2.
 
+`v10.6.0` adds no new settings. It brings celestia-core v0.42.8 and Fibre fixes: `MsgDepositToEscrow` transactions with a non-canonical signer address or a denom other than `utia` are rejected from the mempool and new proposals, and the payment promise cache re-checks its budget when an escrow balance drops. Source builds now need Go 1.26.10.
+
 ## Rotating certificates
 
 Certificates are loaded at startup. To rotate, issue new `node.pem` and `fibre.pem` from the same CA, replace the files, and restart celestia-appd and then Fibre. The leaf certificates above are valid for 825 days. Put a reminder in your calendar.
@@ -289,3 +291,4 @@ Certificates are loaded at startup. To rotate, issue new `node.pem` and `fibre.p
 - [Moving Fibre off the validator host: private VLAN + mTLS (mocha-5)](https://forum.celestia.org/t/moving-fibre-off-the-validator-host-private-vlan-mtls-mocha-5/2314), field report by unitynodes on the Celestia forum
 
 <sub>Commands are examples for mainnet. Check flags against the release you run. <a href="../README.md">← Back to Celestia Tools</a></sub>
+
